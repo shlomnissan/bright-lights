@@ -20,7 +20,8 @@ find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
 
-set(CORE_SOURCES
+set(SHARED_SOURCES
+    libs/glad/glad.c
     src/core/mesh.cpp
     src/core/mesh.h
     src/core/shader.cpp
@@ -29,19 +30,20 @@ set(CORE_SOURCES
     src/core/window.h
 )
 
-set(LIBS_SOURCES
-    libs/glad/glad.c
+set(PROGRAMS
+    01_simple_light
 )
 
-set(DEMO_SOURCES
-    src/main.cpp
-)
+add_executable(01_simple_light ${SHARED_SOURCES} src/01_simple_light/main.cpp)
 
-add_executable(bright-lights ${LIBS_SOURCES} ${CORE_SOURCES} ${DEMO_SOURCES})
+foreach(THIS IN LISTS PROGRAMS)
+    target_sources(${THIS} PRIVATE ${SHARED_SOURCES})
+    target_include_directories(${THIS} PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/libs
+    )
+    target_link_libraries(${THIS} PRIVATE fmt::fmt glfw glm::glm OpenGL::GL)
+endforeach()
 
-target_include_directories(bright-lights PRIVATE
-    ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/libs
-)
 
-target_link_libraries(bright-lights PRIVATE fmt::fmt glfw glm::glm OpenGL::GL)
+
