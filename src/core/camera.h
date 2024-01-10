@@ -7,7 +7,7 @@
 
 #include <core/window.h>
 
-using MousePosition = std::pair<double, double>;
+using MousePosition = std::pair<float, float>;
 
 class Camera {
 public:

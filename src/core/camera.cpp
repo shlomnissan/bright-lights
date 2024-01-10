@@ -13,12 +13,7 @@ auto Camera::View() const -> glm::mat4 {
 auto Camera::Update(Window& window) -> void {
     auto control_key = window.GetKey(GLFW_KEY_LEFT_ALT, GLFW_PRESS);
     if (control_key) {
-        auto curr_pos = MousePosition {
-            static_cast<float>(window.GetMousePosition().first),
-            static_cast<float>(window.GetMousePosition().second)
-        };
-
-        fmt::print("x: {}, y: {}\n", curr_pos.first, curr_pos.second);
+        auto curr_pos = window.mouse_pos();
 
         if (first_pos_) {
             first_pos_ = false;
@@ -39,7 +34,8 @@ auto Camera::Update(Window& window) -> void {
 }
 
 auto Camera::Zoom(const MousePosition& offset_pos) -> void {
-    // TODO: Zoom
+    auto offset = offset_pos.first * -0.0005;
+    position_.z += offset;
 }
 
 auto Camera::Pan(const MousePosition& offset_pos) -> void {
