@@ -11,14 +11,16 @@ using MousePosition = std::pair<float, float>;
 
 class Camera {
 public:
-    Camera() = default;
+    Camera();
 
     auto Update(Window& window) -> void;
     auto View() const -> glm::mat4;
 
 private:
     bool first_pos_ {true};
-    glm::vec3 position_ {0.0f, 0.0f, 1.0f};
+    float pitch_ = 0.0f;
+    float yaw_ = -90.0f;
+    glm::vec3 position_ {0.0f, 0.0f, 3.0f};
     glm::vec3 front_ {0.0f, 0.0f, 0.0f};
     glm::vec3 up_ {0.0f, 1.0f, 0.0f};
 
@@ -27,4 +29,6 @@ private:
     auto Zoom(const MousePosition& offset_pos) -> void;
     auto Pan(const MousePosition& offset_pos) -> void;
     auto Rotate(const MousePosition& offset_pos) -> void;
+
+    auto UpdateVectors() -> void;
 };

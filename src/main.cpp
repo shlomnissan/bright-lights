@@ -16,7 +16,7 @@
 #include "mesh/cube.h"
 
 auto main() -> int {
-    auto window = Window {800, 600, "OpenGL starter project"};
+    auto window = Window {1024, 768, "OpenGL starter project"};
 
     auto shader = Shader {{
         {ShaderType::kVertexShader, _SHADER_vertex},
@@ -29,7 +29,7 @@ auto main() -> int {
     shader.Use();
     shader.SetMat4(
         "Projection",
-        glm::perspective(45.0f, 800.0f / 600.0f, 0.1f, 100.0f)
+        glm::perspective(45.0f, 1024.0f / 768.0f, 0.1f, 100.0f)
     );
 
     auto view = glm::lookAt(

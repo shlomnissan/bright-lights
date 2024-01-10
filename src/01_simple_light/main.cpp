@@ -17,7 +17,7 @@
 #include "mesh/cube.h"
 
 auto main() -> int {
-    auto window = Window {800, 600, "Simple Light"};
+    auto window = Window {1024, 768, "Simple Light"};
     auto camera = Camera{};
 
     auto shader = Shader {{

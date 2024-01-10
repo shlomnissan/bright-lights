@@ -6,8 +6,12 @@
 #include <fmt/printf.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+Camera::Camera() {
+    UpdateVectors();
+}
+
 auto Camera::View() const -> glm::mat4 {
-    return glm::lookAt(position_, front_, up_);
+    return glm::lookAt(position_, position_ + front_, up_);
 }
 
 auto Camera::Update(Window& window) -> void {
@@ -29,19 +33,35 @@ auto Camera::Update(Window& window) -> void {
             Zoom(offset_pos);
         }
 
+        if (window.GetMouseButton(GLFW_MOUSE_BUTTON_MIDDLE, GLFW_PRESS)) {
+            Pan(offset_pos);
+        }
+
         last_pos_ = curr_pos;
+        UpdateVectors();
     }
 }
 
 auto Camera::Zoom(const MousePosition& offset_pos) -> void {
-    auto offset = offset_pos.first * -0.0005;
-    position_.z += offset;
+    auto speed = offset_pos.first * -0.002f;
+    position_.z += speed;
 }
 
 auto Camera::Pan(const MousePosition& offset_pos) -> void {
-    // TODO: Pan
+    auto speed_x = offset_pos.first * -0.002f;
+    auto speed_y = offset_pos.second * -0.002f;
+    position_ += glm::normalize(glm::cross(front_, up_)) * speed_x;
+    position_ += up_ * speed_y;
 }
 
 auto Camera::Rotate(const MousePosition& offset_pos) -> void {
     // TODO: Rotate
+}
+
+auto Camera::UpdateVectors() -> void {
+    auto front = glm::vec3 {0.0f};
+    front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
+    front.y = sin(glm::radians(pitch_));
+    front.z = sin(glm::radians(yaw_)) * cos(glm::radians(pitch_));
+    front_ = glm::normalize(front);
 }
