@@ -6,6 +6,14 @@
 #include <fmt/printf.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+Camera::Camera(float fov, float width, float height) {
+    projection_ = glm::perspective(fov, width / height, 0.1f, 1000.0f);
+}
+
+auto Camera::Projection() const -> glm::mat4 {
+    return projection_;
+}
+
 auto Camera::View() const -> glm::mat4 {
     return  glm::translate(glm::mat4{1.0f}, world_pos_) *
             glm::lookAt(position_, target_, up_);
@@ -39,9 +47,9 @@ auto Camera::Update(Window& window) -> void {
         last_pos_ = curr_pos;
     }
 
-    float pos_x = distance_ * sin(horizontal_angle) * cos(vertical_angle);
-    float pos_y = distance_ * sin(vertical_angle);
-    float pos_z = distance_ * cos(horizontal_angle) * cos(vertical_angle);
+    float pos_x = distance_ * sin(horizontal_angle_) * cos(vertical_angle_);
+    float pos_y = distance_ * sin(vertical_angle_);
+    float pos_z = distance_ * cos(horizontal_angle_) * cos(vertical_angle_);
     position_ = glm::vec3(pos_x, pos_y, pos_z);
 }
 
@@ -51,11 +59,11 @@ auto Camera::Zoom(const MousePosition& offset_pos) -> void {
 }
 
 auto Camera::Pan(const MousePosition& offset_pos) -> void {
-    world_pos_.x += offset_pos.first * 0.005f;
-    world_pos_.y += offset_pos.second * 0.005f;
+    world_pos_.x += offset_pos.first * 0.009f;
+    world_pos_.y += offset_pos.second * 0.009f;
 }
 
 auto Camera::Rotate(const MousePosition& offset_pos) -> void {
-    horizontal_angle += offset_pos.first * -0.009f;
-    vertical_angle += offset_pos.second * -0.009f;
+    horizontal_angle_ += offset_pos.first * -0.009f;
+    vertical_angle_ += offset_pos.second * -0.009f;
 }

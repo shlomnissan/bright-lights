@@ -5,9 +5,6 @@
 
 #include <fmt/printf.h>
 
-#include "shaders/headers/grid_vertex.h"
-#include "shaders/headers/grid_fragment.h"
-
 #define BUFFER_OFFSET(offset) ((void*)(offset * sizeof(GLfloat)))
 #define STRIDE(stride) (sizeof(GLfloat) * stride)
 
@@ -61,8 +58,10 @@ auto Grid::ConfigureVertices() -> void {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, STRIDE(8), BUFFER_OFFSET(0));
 }
 
-auto Grid::Draw(const Shader& shader) const -> void {
-    shader.Use();
+auto Grid::Draw(const Camera& camera) const -> void {
+    shader_.Use();
+    shader_.SetMat4("Projection", camera.Projection());
+    shader_.SetMat4("View", camera.View());
     glBindVertexArray(vao_);
     glDrawArrays(GL_LINES, 0, dimensions_ * 6);
 }
