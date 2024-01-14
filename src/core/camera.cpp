@@ -6,12 +6,9 @@
 #include <fmt/printf.h>
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera() {
-    UpdateVectors();
-}
-
 auto Camera::View() const -> glm::mat4 {
-    return glm::lookAt(position_, position_ + front_, up_);
+    return  glm::translate(glm::mat4{1.0f}, world_pos_) *
+            glm::lookAt(position_, target_, up_);
 }
 
 auto Camera::Update(Window& window) -> void {
@@ -32,36 +29,33 @@ auto Camera::Update(Window& window) -> void {
         if (window.GetMouseButton(GLFW_MOUSE_BUTTON_RIGHT, GLFW_PRESS)) {
             Zoom(offset_pos);
         }
-
         if (window.GetMouseButton(GLFW_MOUSE_BUTTON_MIDDLE, GLFW_PRESS)) {
             Pan(offset_pos);
         }
+        if (window.GetMouseButton(GLFW_MOUSE_BUTTON_LEFT, GLFW_PRESS)) {
+            Rotate(offset_pos);
+        }
 
         last_pos_ = curr_pos;
-        UpdateVectors();
     }
+
+    float pos_x = distance_ * sin(horizontal_angle) * cos(vertical_angle);
+    float pos_y = distance_ * sin(vertical_angle);
+    float pos_z = distance_ * cos(horizontal_angle) * cos(vertical_angle);
+    position_ = glm::vec3(pos_x, pos_y, pos_z);
 }
 
 auto Camera::Zoom(const MousePosition& offset_pos) -> void {
-    auto speed = offset_pos.first * -0.002f;
-    position_.z += speed;
+    distance_ += offset_pos.first * -0.01f;
+    distance_ = std::max(0.1f, distance_);
 }
 
 auto Camera::Pan(const MousePosition& offset_pos) -> void {
-    auto speed_x = offset_pos.first * -0.002f;
-    auto speed_y = offset_pos.second * -0.002f;
-    position_ += glm::normalize(glm::cross(front_, up_)) * speed_x;
-    position_ += up_ * speed_y;
+    world_pos_.x += offset_pos.first * 0.005f;
+    world_pos_.y += offset_pos.second * 0.005f;
 }
 
 auto Camera::Rotate(const MousePosition& offset_pos) -> void {
-    // TODO: Rotate
-}
-
-auto Camera::UpdateVectors() -> void {
-    auto front = glm::vec3 {0.0f};
-    front.x = cos(glm::radians(yaw_)) * cos(glm::radians(pitch_));
-    front.y = sin(glm::radians(pitch_));
-    front.z = sin(glm::radians(yaw_)) * cos(glm::radians(pitch_));
-    front_ = glm::normalize(front);
+    horizontal_angle += offset_pos.first * -0.009f;
+    vertical_angle += offset_pos.second * -0.009f;
 }
