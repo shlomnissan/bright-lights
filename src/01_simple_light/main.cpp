@@ -11,8 +11,8 @@
 #include "core/shader.h"
 #include "core/window.h"
 
-#include "shaders/headers/vertex.h"
-#include "shaders/headers/fragment.h"
+#include "shaders/vertex.h"
+#include "shaders/fragment.h"
 
 #include "shared/grid.h"
 

@@ -12,7 +12,7 @@ foreach(SHADER IN LISTS SHADERS)
     get_filename_component(DIRECTORY ${SHADER} DIRECTORY)
 
     string(REGEX REPLACE "\\.[^.]*$" "" FILENAME_NO_EXT ${FILENAME})
-    set(HEADER_FILE ${DIRECTORY}/headers/${FILENAME_NO_EXT}.h)
+    set(HEADER_FILE ${DIRECTORY}/../${FILENAME_NO_EXT}.h)
 
     message("🎨 Writing shader ${FILENAME_NO_EXT}.h")
 

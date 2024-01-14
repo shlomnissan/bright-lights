@@ -6,8 +6,8 @@
 #include "core/shader.h"
 #include "core/camera.h"
 
-#include "shaders/headers/grid_vertex.h"
-#include "shaders/headers/grid_fragment.h"
+#include "shaders/grid_vertex.h"
+#include "shaders/grid_fragment.h"
 
 #include <glm/glm.hpp>
 

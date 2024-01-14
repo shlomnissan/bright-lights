@@ -11,9 +11,10 @@
 
 # conan/cmake
 
-src/shaders/headers/*.h
 build/*
 CMakeUserPresets.json
+
+**/shaders/*.h
 
 # misc
 
