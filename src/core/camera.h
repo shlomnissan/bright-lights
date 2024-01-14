@@ -11,15 +11,12 @@ using MousePosition = std::pair<float, float>;
 
 class Camera {
 public:
-    auto zoom() { return zoom_; }
-
     auto Update(Window& window) -> void;
     auto View() const -> glm::mat4;
 
 private:
     bool first_pos_ {true};
 
-    float zoom_ = 45.0f;
     float distance_ = 3.0f;
     float horizontal_angle = 0.0f;
     float vertical_angle = 0.0f;

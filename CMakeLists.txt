@@ -24,14 +24,14 @@ set(SHARED_SOURCES
     libs/glad/glad.c
     src/core/camera.cpp
     src/core/camera.h
-    src/core/grid.cpp
-    src/core/grid.h
     src/core/mesh.cpp
     src/core/mesh.h
     src/core/shader.cpp
     src/core/shader.h
     src/core/window.cpp
     src/core/window.h
+    src/shared/grid.cpp
+    src/shared/grid.h
 )
 
 set(PROGRAMS

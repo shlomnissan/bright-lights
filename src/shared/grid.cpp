@@ -5,6 +5,9 @@
 
 #include <fmt/printf.h>
 
+#include "shaders/headers/grid_vertex.h"
+#include "shaders/headers/grid_fragment.h"
+
 #define BUFFER_OFFSET(offset) ((void*)(offset * sizeof(GLfloat)))
 #define STRIDE(stride) (sizeof(GLfloat) * stride)
 
