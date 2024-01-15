@@ -14,6 +14,7 @@ public:
     Camera(float fov, float width, float height);
 
     auto Update(Window& window) -> void;
+    auto Position() const -> glm::vec3;
     auto Projection() const -> glm::mat4;
     auto View() const -> glm::mat4;
 

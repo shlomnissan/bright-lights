@@ -47,9 +47,10 @@ auto main() -> int {
         shader_surface.SetMat4("Projection", camera.Projection());
         shader_surface.SetMat4("View", camera.View());
         shader_surface.SetMat4("ModelView", camera.View() * model);
-        shader_surface.SetVec3("LightPosition", light_pos);
         shader_surface.SetVec3("LightColor", {1.0f, 1.0f, 1.0f});
+        shader_surface.SetVec3("LightPosition", light_pos);
         shader_surface.SetVec3("SurfaceColor", {1.0f, 0.5f, 0.31f});
+        shader_surface.SetVec3("ViewPosition", camera.Position());
 
         cube.Draw(shader_surface); 
     };
