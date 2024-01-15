@@ -35,7 +35,7 @@ auto main() -> int {
     glEnable(GL_DEPTH_TEST);    
 
     auto cube = Mesh {cube_vertex_0, cube_index_0};
-    auto light_pos = glm::vec3 {3.0f, 4.0f, 0.0f};
+    auto light_pos = glm::vec3 {5.0f, 5.0f, 2.0f};
 
     const auto DrawSurface = [&]() {
         shader_surface.Use();
@@ -45,7 +45,10 @@ auto main() -> int {
         model = glm::scale(model, {2.0f, 2.0f, 2.0f});
 
         shader_surface.SetMat4("Projection", camera.Projection());
+        shader_surface.SetMat4("View", camera.View());
         shader_surface.SetMat4("ModelView", camera.View() * model);
+        shader_surface.SetVec3("LightPosition", light_pos);
+        shader_surface.SetVec3("LightColor", {1.0f, 1.0f, 1.0f});
         shader_surface.SetVec3("SurfaceColor", {1.0f, 0.5f, 0.31f});
 
         cube.Draw(shader_surface); 
@@ -58,8 +61,8 @@ auto main() -> int {
         model = glm::translate(model, light_pos);
         model = glm::scale(model, {0.3f, 0.3f, 0.3f});
 
-        shader_surface.SetMat4("Projection", camera.Projection());
-        shader_surface.SetMat4("ModelView", camera.View() * model);
+        shader_light_source.SetMat4("Projection", camera.Projection());
+        shader_light_source.SetMat4("ModelView", camera.View() * model);
 
         cube.Draw(shader_light_source);
     };
