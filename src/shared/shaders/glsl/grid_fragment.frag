@@ -2,8 +2,10 @@
 #pragma debug(on)
 #pragma optimize(off)
 
+in vec3 color;
+
 out vec4 final_color;
 
 void main() {
-    final_color = vec4(0.22, 0.22, 0.22, 1.0);
+    final_color = vec4(color, 1.0);
 }
