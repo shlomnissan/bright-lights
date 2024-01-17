@@ -36,9 +36,11 @@ set(SHARED_SOURCES
 
 set(PROGRAMS
     01_simple_light
+    02_gouraud_shading
 )
 
 add_executable(01_simple_light ${SHARED_SOURCES} src/01_simple_light/main.cpp)
+add_executable(02_gouraud_shading ${SHARED_SOURCES} src/02_gouraud_shading/main.cpp)
 
 foreach(THIS IN LISTS PROGRAMS)
     target_sources(${THIS} PRIVATE ${SHARED_SOURCES})
