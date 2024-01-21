@@ -15,7 +15,7 @@ uniform vec3 SurfaceColor;
 
 void main() {
     // ambient
-    float ambient_factor = 0.3;
+    float ambient_factor = 0.2;
     vec3 ambient = ambient_factor * LightColor;
 
     // diffuse
